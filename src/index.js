@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import {SafeAreaView, View, FlatList, Text, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
 import {api} from './services/api';
 
 
@@ -14,10 +14,19 @@ export default function App() {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="green"/>
-      <View style={estilo.container}>
-        {techs.map(tech => <Text style={estilo.fonte} key={tech.id}> {tech.name} </Text>)}
-      </View>
+      <StatusBar backgroundColor="green"/>
+
+      <SafeAreaView style={estilo.container}>
+        <FlatList          
+          data={techs}
+          keyExtractor={techs.id}
+          renderItem={({item}) => <Text style={estilo.fonteLista}>{item.name}</Text>}
+        />
+
+        <TouchableOpacity>
+          <Text style={estilo.fonte}>Add Tech</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
     </>
     );
 }
@@ -25,13 +34,14 @@ export default function App() {
 const estilo = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: 'black'
   },
   fonte: {
     color: 'white',
-    fontSize: 20,
     fontWeight: 'bold'
+  },
+  fonteLista: {
+    color: "white",
+    fontSize: 24
   }
 });
